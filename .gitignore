@@ -125,7 +125,9 @@ backend/celerybeat-schedule
 
 # SageMath parsed files
 backend/*.sage.py
-
+backend/books/__pycache__/*
+backend/book_store/__pycache__/
+backend/api/__pycache__/
 # dotenv
 backend/.env
 
@@ -160,5 +162,5 @@ backend/!**/migrations
 backend/!**/migrations/__init__.py
 backend/users/__pycache__/*
 backend/books/__pycache__/*
-backend/db.sqlite3
+/backend/db.sqlite3
 *.sqlite3

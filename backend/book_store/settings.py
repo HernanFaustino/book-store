@@ -26,6 +26,7 @@ SECRET_KEY = '^609ck@1!no!k%d3nd^t!)iyo45)8-mv1$xrfy=yj)_@&r*h3$'
 DEBUG = True
 
 ALLOWED_HOSTS = []
+#APPEND_SLASH = True
 
 
 # Application definition
@@ -47,18 +48,26 @@ INSTALLED_APPS = [
     'corsheaders',
     'books',
     'users',
-    'api'
+    'api',
+    'django_filters'
 ]
+
+# Authentication and Pagination classes
+# The pagination is setup to 3
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',  # <-- And here
     ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 3
 }
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 SITE_ID = 1
+
+# Custom User model
 
 AUTH_USER_MODEL = 'users.CustomUser'
 

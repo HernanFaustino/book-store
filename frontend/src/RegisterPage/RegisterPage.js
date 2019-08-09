@@ -1,7 +1,12 @@
 import React, {Component} from 'react';
+import { Link } from 'react-router-dom';
 import AuthenticationService from '../Services/AuthenticationService';
 
 const authenticationService = new AuthenticationService();
+
+/**
+ * Register page
+ */
 
 class RegisterPage extends Component {
     constructor(props) {
@@ -38,7 +43,6 @@ class RegisterPage extends Component {
         }
 
         this.setState({ loading: true });
-        //TODO: Authentication Service
 
         authenticationService.register(username, email, password1, password2)
             .then(
@@ -57,9 +61,10 @@ class RegisterPage extends Component {
     render() {
         const { username, email, password1, password2, submitted, loading, error } = this.state;
         return (
-            <div className={'row justify-content-center'}>
+            <div className={'register-form row justify-content-center align-items-center'}>
                 <div className="col-4">
-                    <form name="form" onSubmit={this.handleSubmit}>
+                    <form name="form" onSubmit={this.handleSubmit} className="form">
+                        <h1>Register</h1>
                         <div className={'form-group' + (submitted && !username ? ' has-error' : '')}>
                             <label htmlFor="username">Username</label>
                             <input type="text" className="form-control" name="username" value={username} onChange={this.handleChange} />
@@ -94,11 +99,12 @@ class RegisterPage extends Component {
                             
                         </div>
 
-                        <div className="form-group">
+                        <div className="form-group d-flex justify-content-between">
                             <button className="btn btn-primary" disabled={loading}>Register</button>
                             {loading &&
                                 <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
                             }
+                            <Link to="/login" ClassName={'register-link'}>back</Link>
                         </div>
                         {error &&
                             <div className={'alert alert-danger'}>{error}</div>

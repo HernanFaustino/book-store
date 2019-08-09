@@ -2,12 +2,21 @@ import axios from 'axios';
 import AuthenticationService from './AuthenticationService';
 
 const authenticationService = new AuthenticationService();
+
+//TODO: save API_URL in a env file o setting file
 const API_URL = 'http://localhost:8000';
 
+axios.defaults.trailingSlash = true;
+
+/**
+ * Authentication service to Login, logout and register users.
+ * AXios module is used to perform the http requests.
+ */
 export default class BookService {
     constructor() {}
 
     getBooks() {
+        // Get all the books saved
         const url = `${API_URL}/api/books/`;
         const currentUser = authenticationService.getCurrectUser();
         const requestOptions = {
@@ -19,7 +28,8 @@ export default class BookService {
     }
 
     getBooksByURL(link) {
-        const url = `${API_URL}${link}`;
+        // GEt books with link for search and filter queries.
+        const url = `${link}`;
         const currentUser = authenticationService.getCurrectUser();
         const requestOptions = {
             method: 'get',
@@ -30,6 +40,7 @@ export default class BookService {
     }
 
     getBook(pk) {
+        // GEt a book by primary key
         const url = `${API_URL}/api/books/${pk}`;
         const currentUser = authenticationService.getCurrectUser();
         const requestOptions = {
@@ -41,6 +52,7 @@ export default class BookService {
     }
 
     deleteBook(book) {
+        // Delete a book
         const url = `${API_URL}/api/books/${book.pk}`;
         const currentUser = authenticationService.getCurrectUser();
         const requestOptions = {
@@ -52,6 +64,7 @@ export default class BookService {
     }
 
     createBook(book) {
+        // Creeate a book
         const url = `${API_URL}/api/books/`;
         const currentUser = authenticationService.getCurrectUser();
         const form = new FormData();
@@ -64,11 +77,10 @@ export default class BookService {
             url: url,   
             headers: {'Content-Type': 'application/json', 'Authorization': `Token ${currentUser.token}`},
             data: form,
-            mimeType: "multipart/form-data",
+            mimeType: "multipart/form-data", // important to send files
             processData: false,
             contentType: false,
         };
-        console.log(book);
         return axios(requestOptions)
         .then(response => {
             console.log(response);
@@ -80,6 +92,7 @@ export default class BookService {
     }
 
     updateBook(book) {
+        // Update a book
         const url = `${API_URL}/api/books/${book.pk}`;
         const currentUser = authenticationService.getCurrectUser();
         const form = new FormData();
@@ -98,7 +111,6 @@ export default class BookService {
             processData: false,
             contentType: false,
         };
-        console.log(book);
         return axios(requestOptions)
             .then(response => {
                 console.log(response);

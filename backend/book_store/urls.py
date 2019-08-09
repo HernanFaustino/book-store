@@ -20,10 +20,9 @@ from django.conf.urls import url
 from django.conf import settings
 from django.conf.urls.static import static
 
+# API and admin url
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'^api/books/$', views.books_list),
-    url(r'^api/books/(?P<pk>[0-9]+)$', views.books_detail),
     path('api/', include('api.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

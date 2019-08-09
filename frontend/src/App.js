@@ -8,21 +8,25 @@ import { PrivateRoute } from './PrivateRoute';
 import './App.css';
 
 class App extends Component {
+    /*
+    The main app component.
+    Only /login and /register are public, the other routers
+    are PrivateRoute wich will be redirected to /login if a user is not
+    authenticated.
+    */
 
     render() {
         return (
-           // <BrowserRouter>
-           //    <BaseLayout/>
-           // </BrowserRouter>
-           <div className="jumbotron">
+          
+           <div className="">
                 <div className="container">
                     <Router>
                         <div>
                             <Route path="/login" component={LoginPage} />
                             <Route path="/register" component={RegisterPage} />
                             <PrivateRoute exact path="/" component={HomePage} />
-                            <Route  exact path="/book/" component={HomePage} />
-                            <Route  path="/book/:pk"  component={HomePage} />
+                            <PrivateRoute exact path="/book/" component={HomePage} />
+                            <PrivateRoute  path="/book/:pk"  component={HomePage} />
                         </div>
                     </Router>
                 </div>

@@ -1,1 +1,28 @@
 @import  'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css';
+
+.login-form, .register-form {
+	margin-top: 10%;
+}
+
+.form {
+	padding: 10%;
+	padding-top: 5%;
+	background-color: #f7f7f9;
+	border-radius: 0.5em
+}
+
+.center-title, h1 {
+	text-align: center;
+}
+
+.login-logo {
+	height:120px;
+    width:auto;/*maintain aspect ratio*/
+    max-width:500px;
+    display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+.register-link {
+	color: red;
+}

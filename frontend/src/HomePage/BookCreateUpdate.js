@@ -3,6 +3,10 @@ import BookService from '../Services/BookService';
 
 const bookService = new BookService();
 
+/**
+ * BookCreateUpdate component is the form to create or update a book
+ */
+
 class BookCreateUpdate extends Component {
 
     constructor(props) {
@@ -22,16 +26,18 @@ class BookCreateUpdate extends Component {
 
     componentDidMount() {
         const { match: { params } } =  this.props;
-        if (params && params.pk) {
+        if (params && params.pk) { // if pk is in the paramns, the books is gotten to be updated
             bookService.getBook(params.pk).then((c) => {
+                console.log(c);
                 this.setState(c);
             });
         }
     }
 
     handleChange(e) {
+        // Handle the change in forms fields
         const {name, value} = e.target;
-        if (name == "cover_image") {
+        if (name === "cover_image") {
             this.setState({cover_image: e.target.files[0], imageChanged: true});
         } else {
             this.setState({ [name]: value });
@@ -39,6 +45,7 @@ class BookCreateUpdate extends Component {
     }
 
     handleCreate() {
+        // Book service create the book entered in the form
         bookService.createBook({
             "title": this.state.title,
             "author": this.state.author,
@@ -54,6 +61,7 @@ class BookCreateUpdate extends Component {
     }
 
     handleUpdate(pk) {
+        //Book service update the book edited in the form, only the edited fields
         var { title, author, publication_year, edition, cover_image, quantity } = this.state;
         if (!this.state.imageChanged) {
             cover_image = null;
@@ -74,6 +82,7 @@ class BookCreateUpdate extends Component {
     }
 
     handleSubmit(event) {
+        // When submitted, check if its is creation or update
         const { match: { params } } = this.props;
         if (params && params.pk) {
             this.handleUpdate(params.pk);
@@ -88,7 +97,7 @@ class BookCreateUpdate extends Component {
         const cover_image = this.state.cover_image;
         return (
             <div className="row">
-                <div class="col-6">
+                <div className="col-6">
                     <form onSubmit={this.handleSubmit}>
                         <div className="form-group">
                             <label>Title</label>
@@ -114,7 +123,9 @@ class BookCreateUpdate extends Component {
                     </form>
                 </div>
                 <div className={'col-6 row justify-content-center'}>
-                    <img src={cover_image} alt="Cover Image" height="auto" width="auto" />
+                    {cover_image&&
+                    <img src={cover_image} alt="Cover Image" height="auto" width="auto" className={'img-fluid cover_image'} />
+                    }
                 </div>
             </div>
         );

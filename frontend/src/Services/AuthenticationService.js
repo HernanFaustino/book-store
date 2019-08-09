@@ -1,10 +1,16 @@
 import axios from 'axios';
-const API_URL = 'http://localhost:8000';
 
+//TODO: save API_URL in a env file o setting file
+const API_URL = 'http://localhost:8000';
+/**
+ * Authentication service to Login, logout and register users.
+ * AXios module is used to perform the http requests.
+ */
 export default class AuthenticationService {
     constructor() {}
 
     login(username, password) {
+        //login with username and password
         const url = `${API_URL}/api/rest-auth/login/`;
         const requestOptions = {
             method: 'post',
@@ -17,8 +23,8 @@ export default class AuthenticationService {
         };
 
         return axios(requestOptions)
-            .catch(this.handleResponse)
-            .then(data => {
+            .catch(this.handleResponse) // if there are errors
+            .then(data => {             // if correct response
                 if (data) {
                     data.authdata = window.btoa(username + ':' + password);
                     data.username = username;
@@ -30,6 +36,7 @@ export default class AuthenticationService {
     }
 
     register(username, email, password1, password2) {
+        // Register with username, email, password and password confirmation
         const url = `${API_URL}/api/rest-auth/registration/`;
         const requestOptions = {
             method: 'post',
@@ -44,8 +51,8 @@ export default class AuthenticationService {
         };
 
         return axios(requestOptions)
-            .catch(this.handleResponse)
-            .then(data => {
+            .catch(this.handleResponse) // When Error
+            .then(data => {             // When ok  
                 if (data) {
                     data.authdata = window.btoa(username + ':' + password1);
                     data.username = username;
@@ -58,6 +65,7 @@ export default class AuthenticationService {
     }
 
     getCurrectUser() {
+        // Get the currect user saved in local stoage
         return JSON.parse(localStorage.getItem('user'));
     }
     
